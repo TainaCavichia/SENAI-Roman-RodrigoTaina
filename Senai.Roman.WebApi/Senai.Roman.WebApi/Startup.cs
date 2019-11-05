@@ -48,7 +48,10 @@ namespace Senai.Roman.WebApi
                     ValidAudience = "Roman.WebApi"
                 };
             });
-
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = "M_Roman API", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,7 +61,12 @@ namespace Senai.Roman.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseSwagger();
 
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "M_Roman API V1");
+            });
             app.UseAuthentication();
             app.UseMvc();
         }
